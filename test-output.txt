@@ -1,0 +1,42 @@
+﻿node.exe : PASS 
+tests/api.test.ts 
+(5.424 s)
+No linha:1 caractere:1
++ & "C:\Program 
+Files\nodejs/node.exe" 
+"C:\Program 
+Files\nodejs/node_mo 
+...
++ ~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~
+~~
+    + CategoryInfo     
+         : NotSpecifi  
+  ed: (PASS tests/ap   
+ i.test.ts (5.424 s    
+):String) [], Remo    
+teException
+    + FullyQualifiedEr 
+   rorId : NativeComm  
+  andError
+ 
+  Study Entry API
+    ÔêÜ should create 
+a study entry (123 ms)
+  Study Entry Filtering
+    ÔêÜ should list 
+entries with filters 
+(123 ms)
+  Mind Map API
+    ÔêÜ should save 
+and load a mind map 
+(177 ms)
+
+Test Suites: 1 passed, 
+1 total
+Tests:       3 passed, 
+3 total
+Snapshots:   0 total
+Time:        5.717 s
+Ran all test suites.

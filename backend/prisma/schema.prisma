@@ -1,0 +1,94 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  password  String
+  timezone  String   @default("America/Sao_Paulo")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  studyEntries StudyEntry[]
+  exams        Exam[]
+  subjects     Subject[]
+}
+
+model Exam {
+  id        String   @id @default(uuid())
+  name      String
+  userId    String
+  createdAt DateTime @default(now())
+
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  studyEntries StudyEntry[]
+
+  @@unique([name, userId])
+}
+
+model Subject {
+  id        String   @id @default(uuid())
+  name      String
+  userId    String
+  createdAt DateTime @default(now())
+
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  studyEntries StudyEntry[]
+
+  @@unique([name, userId])
+}
+
+model StudyEntry {
+  id              String   @id @default(uuid())
+  studyDate       String   // YYYY-MM-DD
+  startTime       String   // HH:MM
+  endTime         String   // HH:MM
+  grossHours      Float    // auto-calculated
+  netHours        Float    // user input
+  cycle           String?  // e.g. "Ciclo 1"
+  cycleDay        Int?     // e.g. 1, 2, 3
+  notes           String?  // rich text HTML
+  summary         String?  // short summary
+  difficulty      Int      @default(3) // 1-5
+  tags            String   @default("") // comma-separated tags
+  userId          String
+  examId          String?
+  subjectId       String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  user      User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  exam      Exam?          @relation(fields: [examId], references: [id], onDelete: SetNull)
+  subject   Subject?       @relation(fields: [subjectId], references: [id], onDelete: SetNull)
+  materials MaterialItem[]
+  mindMaps  MindMap[]
+}
+
+model MaterialItem {
+  id           String   @id @default(uuid())
+  type         String   // "livro", "pdf", "video", "plataforma", "link", "professor", "outro"
+  title        String
+  details      String?
+  studyEntryId String
+  createdAt    DateTime @default(now())
+
+  studyEntry StudyEntry @relation(fields: [studyEntryId], references: [id], onDelete: Cascade)
+}
+
+model MindMap {
+  id           String   @id @default(uuid())
+  title        String
+  treeData     String   // JSON tree structure
+  studyEntryId String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  studyEntry StudyEntry @relation(fields: [studyEntryId], references: [id], onDelete: Cascade)
+}
