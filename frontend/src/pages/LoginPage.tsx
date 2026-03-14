@@ -1,9 +1,11 @@
 import { useState, FormEvent } from 'react';
 import { useAuth } from '../contexts/AuthContext';
+import { useTheme } from '../contexts/ThemeContext';
 import StudyLogLogo from '../components/StudyLogLogo';
 
 export default function LoginPage() {
     const { login, register } = useAuth();
+    const { theme, setTheme, themes } = useTheme();
     const [isRegister, setIsRegister] = useState(false);
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -31,6 +33,22 @@ export default function LoginPage() {
 
     return (
         <div className="auth-page">
+            {/* Theme Switcher at Top Right */}
+            <div style={{ position: 'absolute', top: 24, right: 24 }}>
+                <div className="theme-switcher" style={{ marginTop: 0 }}>
+                    {themes.map(t => (
+                        <button
+                            key={t.value}
+                            className={theme === t.value ? 'active' : ''}
+                            onClick={() => setTheme(t.value)}
+                            title={t.label}
+                        >
+                            {t.icon} {t.label}
+                        </button>
+                    ))}
+                </div>
+            </div>
+
             <div className="auth-card">
                 <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 16 }}>
                     <StudyLogLogo size={56} />
