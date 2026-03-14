@@ -19,7 +19,7 @@ const THEMES: { value: ThemeMode; label: string; icon: string }[] = [
 export function ThemeProvider({ children }: { children: ReactNode }) {
     const [theme, setThemeState] = useState<ThemeMode>(() => {
         const saved = localStorage.getItem('studylog-theme');
-        return (saved as ThemeMode) || 'dark';
+        return (saved as ThemeMode) || 'light';
     });
 
     const setTheme = (newTheme: ThemeMode) => {

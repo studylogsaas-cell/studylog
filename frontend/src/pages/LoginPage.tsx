@@ -33,22 +33,6 @@ export default function LoginPage() {
 
     return (
         <div className="auth-page">
-            {/* Theme Switcher at Top Right */}
-            <div style={{ position: 'absolute', top: 24, right: 24 }}>
-                <div className="theme-switcher" style={{ marginTop: 0 }}>
-                    {themes.map(t => (
-                        <button
-                            key={t.value}
-                            className={theme === t.value ? 'active' : ''}
-                            onClick={() => setTheme(t.value)}
-                            title={t.label}
-                        >
-                            {t.icon} {t.label}
-                        </button>
-                    ))}
-                </div>
-            </div>
-
             <div className="auth-card">
                 <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 16 }}>
                     <StudyLogLogo size={56} />
@@ -112,6 +96,21 @@ export default function LoginPage() {
                     <button onClick={() => { setIsRegister(!isRegister); setError(''); }}>
                         {isRegister ? 'Fazer login' : 'Cadastre-se'}
                     </button>
+                </div>
+
+                <div style={{ marginTop: 32, display: 'flex', justifyContent: 'center' }}>
+                    <div className="theme-switcher">
+                        {themes.map(t => (
+                            <button
+                                key={t.value}
+                                className={theme === t.value ? 'active' : ''}
+                                onClick={() => setTheme(t.value)}
+                                title={t.label}
+                            >
+                                {t.icon} {t.label}
+                            </button>
+                        ))}
+                    </div>
                 </div>
             </div>
         </div>
